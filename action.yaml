@@ -1,0 +1,29 @@
+name: SSH Key Management and Script Execution
+description: Uses a custom ed25519 SSH key if provided, otherwise generates one, copies it to a remote server with optional password authentication, runs a user script with custom or GitHub environment variables, and removes the key.
+inputs:
+  ssh-host:
+    description: "Remote server hostname or IP address"
+    required: true
+  ssh-user:
+    description: "SSH user for the remote server"
+    required: true
+  ssh-port:
+    description: "SSH port for the remote server"
+    required: false
+    default: "22"
+  ssh-password:
+    description: "Optional password for SSH authentication (used with sshpass)"
+    required: false
+  custom-ed25519-key:
+    description: "Optional custom ed25519 private key to use instead of generating a new one"
+    required: false
+  script:
+    description: "Script antwortto execute on the remote server"
+    required: true
+  env-vars:
+    description: "Optional environment variables for the script. Use KEY=VALUE for custom vars or variable names for GitHub env/secrets (e.g., KEY1=VALUE1,KEY2=VALUE2 or SECRET_NAME,ENV_NAME)"
+    required: false
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
