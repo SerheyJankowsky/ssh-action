@@ -1,7 +1,6 @@
 name: SSH Key Management and Script Execution
 description: Uses a custom ed25519 SSH key if provided, otherwise generates one, copies it to a remote server with optional password authentication, runs a user script with custom or GitHub environment variables, and removes the key.
 inputs:
-  inputs:
   ssh_host:
     description: "Remote server hostname or IP address"
     required: true
