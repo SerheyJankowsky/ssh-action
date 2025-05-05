@@ -10,14 +10,6 @@ CUSTOM_ED25519_KEY="$INPUT_CUSTOM_ED25519_KEY"
 SCRIPT="$INPUT_SCRIPT"
 ENV_VARS="$INPUT_ENV_VARS"
 
-echo "SSH_HOST: $SSH_HOST"
-echo "SSH_USER: $SSH_USER"
-echo "SSH_PORT: $SSH_PORT"
-echo "SSH_PASSWORD: $SSH_PASSWORD"
-echo "CUSTOM_ED25519_KEY: $CUSTOM_ED25519_KEY"
-echo "SCRIPT: $SCRIPT"
-echo "ENV_VARS: $ENV_VARS"
-
 # Validate required inputs
 if [ -z "$SSH_HOST" ] || [ -z "$SSH_USER" ] || [ -z "$SCRIPT" ]; then
   echo "Error: ssh-host, ssh-user, and script are required inputs"
