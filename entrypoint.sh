@@ -41,9 +41,9 @@ fi
 
 # Copy public key to remote server
 if [ -n "$SSH_PASSWORD" ]; then
-  sshpass -p "$SSH_PASSWORD" ssh-copy-id -T -o StrictHostKeyChecking=no -i ~/.ssh/temp_key.pub -p "$SSH_PORT" "$SSH_USER@$SSH_HOST"
+  sshpass -p "$SSH_PASSWORD" ssh-copy-id -o StrictHostKeyChecking=no -i ~/.ssh/temp_key.pub -p "$SSH_PORT" "$SSH_USER@$SSH_HOST"
 else
-  ssh-copy-id -T -o StrictHostKeyChecking=no -i ~/.ssh/temp_key.pub -p "$SSH_PORT" "$SSH_USER@$SSH_HOST"
+  ssh-copy-id -o StrictHostKeyChecking=no -i ~/.ssh/temp_key.pub -p "$SSH_PORT" "$SSH_USER@$SSH_HOST"
 fi
 
 # Build environment variable export commands
@@ -71,7 +71,7 @@ if [ -n "$ENV_VARS" ]; then
 fi
 
 # Run user script on remote server with environment variables
-ssh -T -i ~/.ssh/temp_key -o StrictHostKeyChecking=no -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << EOF
+ssh -T -i ~/.ssh/temp_key -o StrictHostKeyChecking=no -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << EOF 2>/dev/null
 $ENV_SCRIPT
 $SCRIPT
 EOF
