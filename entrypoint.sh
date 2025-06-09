@@ -71,10 +71,29 @@ if [ -n "$ENV_VARS" ]; then
 fi
 
 # Run user script on remote server with environment variables
-ssh -T -i ~/.ssh/temp_key -o StrictHostKeyChecking=no -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << EOF
+REMOTE_OUTPUT=$(ssh -T -i ~/.ssh/temp_key -o StrictHostKeyChecking=no -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << EOF
 $ENV_SCRIPT
 $SCRIPT
 EOF
+)
+SSH_EXIT_CODE=$?
+
+# Write output to GitHub Actions job summary
+if [ -n "$GITHUB_STEP_SUMMARY" ]; then
+  echo '### Remote Script Output' >> "$GITHUB_STEP_SUMMARY"
+  echo '```' >> "$GITHUB_STEP_SUMMARY"
+  echo "$REMOTE_OUTPUT" >> "$GITHUB_STEP_SUMMARY"
+  echo '```' >> "$GITHUB_STEP_SUMMARY"
+fi
+
+# Print output to log
+echo "$REMOTE_OUTPUT"
+
+# Exit with the SSH command's exit code
+if [ $SSH_EXIT_CODE -ne 0 ]; then
+  echo "Remote script failed with exit code $SSH_EXIT_CODE"
+  exit $SSH_EXIT_CODE
+fi
 
 # Remove key from remote server
 ssh -T -i ~/.ssh/temp_key -o StrictHostKeyChecking=no -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << EOF
