@@ -71,7 +71,7 @@ if [ -n "$ENV_VARS" ]; then
 fi
 
 # Run user script on remote server with environment variables
-ssh -T -i ~/.ssh/temp_key -o StrictHostKeyChecking=no -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << EOF 2>/dev/null
+ssh -T -i ~/.ssh/temp_key -o StrictHostKeyChecking=no -p "$SSH_PORT" "$SSH_USER@$SSH_HOST" << EOF
 $ENV_SCRIPT
 $SCRIPT
 EOF
